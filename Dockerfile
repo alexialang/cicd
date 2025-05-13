@@ -4,7 +4,7 @@ FROM python
 WORKDIR /app
 
 # Copier d'abord le fichier des dépendances
-COPY requirements.txt .
+COPY app/requirements.txt .
 
 # Installer les dépendances (Flask et pytest)
 RUN pip install --no-cache-dir -r requirements.txt
