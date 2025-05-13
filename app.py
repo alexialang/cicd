@@ -28,6 +28,6 @@ def test_hello_with_name_parameter(client):
 def test_hello_with_another_name(client):
     """Teste la route '/hello/<name>' avec un autre nom."""
     test_name = "Utilisateur"
-    response = client.get(f'/hello/{test_name}')
+    response = client.get(f'/hello/{test_name%}')
     assert response.status_code == 200
     assert f'<h1>Hello, {test_name}!</h1>'.encode() in response.data
