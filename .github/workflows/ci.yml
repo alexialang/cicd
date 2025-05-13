@@ -23,3 +23,23 @@ jobs:
       run: docker run --rm myapp-ci:${{ github.sha }} pytest
 
 
+  build_and_push_docker:
+      # Job name that shows in the GitHub UI
+      name: Build Docker Images
+      # Runner to use
+      runs-on: ubuntu-latest
+      needs: build_and_test
+      steps:
+      # Récupèrele contenu du git
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # Étape de construction de l'image Docker Stable
+      - name: Build Docker Stable image
+        run: docker build -t $DOCKER_REGISTRY_URL/myapp-ci:stable .
+
+
+      # login sur le registre privé
+      - name: Login Docker registry
+        run: echo $DOCKER_PASSWORD | docker login https://$DOCKER_REGISTRY_URL/v2/ -u $DOCKER_USERNAME --password-stdin
+        continue-on-error: true
